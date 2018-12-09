@@ -7,9 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 admin = User.new
-admin.email = 'admin@sequencer.com'
-admin.password = 'bananaQueen'
-admin.password_confirmation = 'bananaQueen'
+admin.email = 'bks@sequencer.com'
+admin.password = 'password1'
+admin.password_confirmation = 'password1'
 admin.admin = true
 admin.save
 
