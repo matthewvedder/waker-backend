@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+admin = User.new
+admin.email = 'admin@sequencer.com'
+admin.password = 'bananaQueen'
+admin.password_confirmation = 'bananaQueen'
+admin.admin = true
+admin.save
+
+user = User.new
+user.email = 'user@sequencer.com'
+user.password = 'bananaDude'
+user.password_confirmation = 'bananaDude'
+user.save
