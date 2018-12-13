@@ -10,7 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181208183951) do
+ActiveRecord::Schema.define(version: 20181213232322) do
+
+  create_table "asana_instances", force: :cascade do |t|
+    t.text "notes"
+    t.integer "num_breaths"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "asana_id"
+    t.integer "sequence_id"
+  end
+
+  create_table "asanas", force: :cascade do |t|
+    t.string "name"
+    t.string "level"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sequences", force: :cascade do |t|
+    t.string "name"
+    t.string "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
