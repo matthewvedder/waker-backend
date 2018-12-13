@@ -1,2 +1,0 @@
-class Pose < ApplicationRecord
-end
