@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181208183951) do
+ActiveRecord::Schema.define(version: 20181213230602) do
+
+  create_table "pose_instances", force: :cascade do |t|
+    t.text "notes"
+    t.integer "num_breaths"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "poses", force: :cascade do |t|
+    t.string "name"
+    t.string "level"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sequences", force: :cascade do |t|
+    t.string "name"
+    t.string "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
