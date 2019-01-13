@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181213232322) do
+ActiveRecord::Schema.define(version: 20190113190748) do
 
   create_table "asana_instances", force: :cascade do |t|
     t.text "notes"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20181213232322) do
     t.string "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_sequences_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
