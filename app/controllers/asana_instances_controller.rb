@@ -1,4 +1,5 @@
 class AsanaInstancesController < ApplicationController
+  before_action :authenticate_user
   before_action :set_asana_instance, only: [:show, :update, :destroy]
 
   # GET /asana_instances
