@@ -16,7 +16,6 @@ class AsanaInstancesController < ApplicationController
   # POST /asana_instances
   def create
     @asana_instance = AsanaInstance.new(asana_instance_params)
-
     if @asana_instance.save
       render json: @asana_instance, status: :created, location: @asana_instance
     else
