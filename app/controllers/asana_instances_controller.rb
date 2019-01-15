@@ -16,11 +16,12 @@ class AsanaInstancesController < ApplicationController
 
   # POST /asana_instances
   def create
-    @asana_instance = AsanaInstance.new(asana_instance_params)
-    if @asana_instance.save
-      render json: @asana_instance, status: :created, location: @asana_instance
+    asana_instance = AsanaInstance.new(asana_instance_params)
+    sequence = Sequence.find params[:sequence_id]
+    if asana_instance.save
+      render json: sequence.asana_instances, status: :created, location: asana_instance
     else
-      render json: @asana_instance.errors, status: :unprocessable_entity
+      render json: asana_instance.errors, status: :unprocessable_entity
     end
   end
 
