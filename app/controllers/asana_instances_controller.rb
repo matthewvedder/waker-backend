@@ -4,9 +4,9 @@ class AsanaInstancesController < ApplicationController
 
   # GET /asana_instances
   def index
-    @asana_instances = AsanaInstance.all
+    sequence = Sequence.find params[:sequence_id]
 
-    render json: @asana_instances
+    render json: sequence.asana_instances
   end
 
   # GET /asana_instances/1
