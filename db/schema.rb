@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20190113190748) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "asana_instances", force: :cascade do |t|
     t.text "notes"
     t.integer "num_breaths"
@@ -34,7 +37,7 @@ ActiveRecord::Schema.define(version: 20190113190748) do
     t.string "level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_sequences_on_user_id"
   end
 
@@ -46,4 +49,5 @@ ActiveRecord::Schema.define(version: 20190113190748) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "sequences", "users"
 end

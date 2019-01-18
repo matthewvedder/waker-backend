@@ -6,7 +6,7 @@ class AsanaInstancesController < ApplicationController
   def index
     sequence = Sequence.find params[:sequence_id]
 
-    render json: sequence.asana_instances
+    render json: sequence.asana_instances.joins(:asana)
   end
 
   # GET /asana_instances/1
