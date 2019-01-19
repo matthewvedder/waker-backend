@@ -1,4 +1,5 @@
 class SequencesController < ApplicationController
+  before_action :authenticate_user
   before_action :set_sequence, only: [:show, :update, :destroy]
 
   # GET /sequences
@@ -46,6 +47,6 @@ class SequencesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def sequence_params
-      params.require(:sequence).permit(:name, :level)
+      params.require(:sequence).permit(:name, :level, layout: [:w, :h, :x, :y, :i])
     end
 end

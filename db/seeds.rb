@@ -18,3 +18,17 @@ user.email = 'user@sequencer.com'
 user.password = 'bananaDude'
 user.password_confirmation = 'bananaDude'
 user.save
+
+sequence = Sequence.new
+sequence.user = admin
+sequence.save
+
+asanas = [
+   { name: 'Downward Facing Dog' },
+   { name: 'Locust' },
+   { name: 'Warrior Two' },
+   { name: 'Crow' },
+   { name: 'King Pidgeon' }
+]
+
+Asana.create(asanas)
