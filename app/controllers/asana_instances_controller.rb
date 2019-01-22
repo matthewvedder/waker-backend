@@ -36,7 +36,9 @@ class AsanaInstancesController < ApplicationController
 
   # DELETE /asana_instances/1
   def destroy
+    sequence = @asana_instance.sequence
     @asana_instance.destroy
+    render json: sequence.asana_instances
   end
 
   private
