@@ -15,7 +15,11 @@ class AsanasController < ApplicationController
 
   # POST /asanas
   def create
-    @asana = Asana.new(asana_params)
+    @asana = Asana.new(
+      name: params[:name],
+      level: params[:level],
+      description: params[:description]
+    )
 
     if @asana.save
       render json: @asana, status: :created, location: @asana
