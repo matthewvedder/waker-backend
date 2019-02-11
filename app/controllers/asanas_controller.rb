@@ -5,7 +5,7 @@ class AsanasController < ApplicationController
   def index
     @asanas = Asana.all
 
-    render json: @asanas
+    render json: url_for(@asanas.last.thumbnail)
   end
 
   # GET /asanas/1
@@ -15,13 +15,11 @@ class AsanasController < ApplicationController
 
   # POST /asanas
   def create
-    @asana = Asana.new(
-      name: params[:name],
-      level: params[:level],
-      description: params[:description]
-    )
-
+    @asana = Asana.new(asana_params)
     if @asana.save
+      img = params['image'].split(',')[1]
+      imageBinaryData = Base64.decode64(img)
+      @asana.thumbnail.attach(io: StringIO.new(imageBinaryData), filename:'test.png')
       render json: @asana, status: :created, location: @asana
     else
       render json: @asana.errors, status: :unprocessable_entity
@@ -50,6 +48,6 @@ class AsanasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def asana_params
-      params.require(:asana).permit(:name, :level, :image)
+      params.require(:asana).permit(:name, :level, :description)
     end
 end
