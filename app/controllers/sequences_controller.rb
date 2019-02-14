@@ -14,12 +14,12 @@ class SequencesController < ApplicationController
 
   # POST /sequences
   def create
-    @sequence = Sequence.new(sequence_params)
-
-    if @sequence.save
-      render json: @sequence, status: :created, location: @sequence
+    sequence = Sequence.new(sequence_params)
+    sequence.user = current_user
+    if sequence.save
+      render json: current_user.sequences, status: :created
     else
-      render json: @sequence.errors, status: :unprocessable_entity
+      render json: sequence.errors, status: :unprocessable_entity
     end
   end
 
