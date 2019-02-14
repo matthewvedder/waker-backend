@@ -35,6 +35,7 @@ class SequencesController < ApplicationController
   # DELETE /sequences/1
   def destroy
     @sequence.destroy
+    render json: current_user.sequences
   end
 
   private
