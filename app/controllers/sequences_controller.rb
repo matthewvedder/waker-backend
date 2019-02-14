@@ -4,9 +4,7 @@ class SequencesController < ApplicationController
 
   # GET /sequences
   def index
-    @sequences = Sequence.all
-
-    render json: @sequences
+    render json: current_user.sequences
   end
 
   # GET /sequences/1
