@@ -19,7 +19,7 @@ class AsanaInstancesController < ApplicationController
     asana_instance = AsanaInstance.new(asana_instance_params)
     sequence = Sequence.find params[:sequence_id]
     if asana_instance.save
-      render json: sequence.asana_instances, status: :created, location: asana_instance
+      render json: sequence.asana_instances.order(:created_at), status: :created, location: asana_instance
     else
       render json: asana_instance.errors, status: :unprocessable_entity
     end
