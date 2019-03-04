@@ -49,6 +49,6 @@ class AsanaInstancesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def asana_instance_params
-      params.require(:asana_instance).permit(:asana_id, :sequence_id)
+      params.require(:asana_instance).permit(:asana_id, :sequence_id, :duration_qty, :duration_unit, :side, :notes)
     end
 end
