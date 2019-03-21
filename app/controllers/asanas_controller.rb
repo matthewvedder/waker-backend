@@ -3,7 +3,7 @@ class AsanasController < ApplicationController
 
   # GET /asanas
   def index
-    asanas_json = Asana.all.map do |a|
+    asanas_json = Asana.all.order(:name).map do |a|
       json = a.as_json
       json[:thumbnail] = url_for(a.thumbnail) if a.thumbnail.attached?
       json
