@@ -4,7 +4,7 @@ class SequencesController < ApplicationController
 
   # GET /sequences
   def index
-    render json: current_user.sequences
+    render json: current_user.sequences.order(created_at: :desc)
   end
 
   # GET /sequences/1
