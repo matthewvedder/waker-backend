@@ -6,7 +6,7 @@ class AsanaInstancesController < ApplicationController
   def index
     sequence = Sequence.find params[:sequence_id]
 
-    render json: sequence.asana_instances.joins(:asana).order(:created_at)
+    render json: sequence.asana_instances.order(:created_at).to_json(include: :asana)
   end
 
   # GET /asana_instances/1
@@ -19,7 +19,7 @@ class AsanaInstancesController < ApplicationController
     asana_instance = AsanaInstance.new(asana_instance_params)
     sequence = Sequence.find params[:sequence_id]
     if asana_instance.save
-      render json: sequence.asana_instances.order(:created_at), status: :created, location: asana_instance
+      render json: sequence.asana_instances.order(:created_at).to_json(include: :asana), status: :created, location: asana_instance
     else
       render json: asana_instance.errors, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class AsanaInstancesController < ApplicationController
   # PATCH/PUT /asana_instances/1
   def update
     if @asana_instance.update(asana_instance_params)
-      render json: @asana_instance
+      render json: @asana_instance.to_json(include: :asana)
     else
       render json: @asana_instance.errors, status: :unprocessable_entity
     end
@@ -38,7 +38,7 @@ class AsanaInstancesController < ApplicationController
   def destroy
     sequence = @asana_instance.sequence
     @asana_instance.destroy
-    render json: sequence.asana_instances
+    render json: sequence.asana_instances.to_json(include: :asana)
   end
 
   private
