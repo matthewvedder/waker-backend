@@ -5,8 +5,10 @@ class AsanaInstancesController < ApplicationController
   # GET /asana_instances
   def index
     sequence = Sequence.find params[:sequence_id]
-
-    render json: sequence.asana_instances.order(:created_at).to_json(include: :asana)
+    layout = sequence.layout.map(&:to_i)
+    render json: sequence.asana_instances
+      .sort_by{ |instance| layout.index(instance.id) || layout.length }
+      .to_json(include: :asana)
   end
 
   # GET /asana_instances/1

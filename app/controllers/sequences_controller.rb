@@ -46,6 +46,6 @@ class SequencesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def sequence_params
-      params.require(:sequence).permit(:name, :level, layout: [:w, :h, :x, :y, :i])
+      params.require(:sequence).permit(:name, :level, layout: [])
     end
 end
