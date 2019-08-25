@@ -40,7 +40,10 @@ class AsanaInstancesController < ApplicationController
   def destroy
     sequence = @asana_instance.sequence
     @asana_instance.destroy
-    render json: sequence.asana_instances.to_json(include: :asana)
+    layout = sequence.layout.map(&:to_i)
+    render json: sequence.asana_instances
+      .sort_by{ |instance| layout.index(instance.id) || layout.length }
+      .to_json(include: :asana)
   end
 
   private
