@@ -17,7 +17,7 @@ class SequencesController < ApplicationController
     sequence = Sequence.new(sequence_params)
     sequence.user = current_user
     if sequence.save
-      render json: current_user.sequences, status: :created
+      render json: { sequences: current_user.sequences, sequence: sequence }, status: :created
     else
       render json: sequence.errors, status: :unprocessable_entity
     end
