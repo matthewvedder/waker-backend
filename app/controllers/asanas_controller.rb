@@ -13,7 +13,9 @@ class AsanasController < ApplicationController
 
   # GET /asanas/1
   def show
-    render json: @asana
+    json = @asana.as_json
+    json[:image] = url_for(@asana.thumbnail) if @asana.thumbnail.attached?
+    render json: json
   end
 
   # POST /asanas
