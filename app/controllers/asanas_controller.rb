@@ -34,7 +34,12 @@ class AsanasController < ApplicationController
   # PATCH/PUT /asanas/1
   def update
     if @asana.update(asana_params)
-      render json: @asana
+      img = params['image'].split(',')[1]
+      imageBinaryData = Base64.decode64(img)
+      @asana.thumbnail.attach(io: StringIO.new(imageBinaryData), filename:'test.png')
+      json = @asana.as_json
+      json[:image] = img if @asana.thumbnail.attached?
+      render json: json
     else
       render json: @asana.errors, status: :unprocessable_entity
     end
