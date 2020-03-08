@@ -5,10 +5,7 @@ class AsanaInstancesController < ApplicationController
   # GET /asana_instances
   def index
     sequence = Sequence.find params[:sequence_id]
-    layout = sequence.layout.map(&:to_i)
-    render json: sequence.asana_instances
-      .sort_by{ |instance| layout.index(instance.id) || layout.length }
-      .to_json(include: :asana)
+    render json: sequence_by_layout(sequence)
   end
 
   # GET /asana_instances/1
@@ -21,7 +18,7 @@ class AsanaInstancesController < ApplicationController
     asana_instance = AsanaInstance.new(asana_instance_params)
     sequence = Sequence.find params[:sequence_id]
     if asana_instance.save
-      render json: sequence.asana_instances.order(:created_at).to_json(include: :asana), status: :created, location: asana_instance
+      render json: sequence_by_layout(sequence), status: :created, location: asana_instance
     else
       render json: asana_instance.errors, status: :unprocessable_entity
     end
@@ -38,18 +35,21 @@ class AsanaInstancesController < ApplicationController
 
   # DELETE /asana_instances/1
   def destroy
-    sequence = @asana_instance.sequence
     @asana_instance.destroy
-    layout = sequence.layout.map(&:to_i)
-    render json: sequence.asana_instances
-      .sort_by{ |instance| layout.index(instance.id) || layout.length }
-      .to_json(include: :asana)
+    render json: sequence_by_layout(@asana_instance.sequence)
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_asana_instance
       @asana_instance = AsanaInstance.find(params[:id])
+    end
+
+    def sequence_by_layout(sequence)
+      layout = sequence.layout.map(&:to_i)
+      sequence.asana_instances
+        .sort_by{ |instance| layout.index(instance.id) || layout.length }
+        .to_json(include: :asana)
     end
 
     # Only allow a trusted parameter "white list" through.
