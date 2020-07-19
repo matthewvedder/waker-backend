@@ -1,6 +1,7 @@
 class SequencesController < ApplicationController
-  before_action :authenticate_user
+  # before_action :authenticate_user
   before_action :set_sequence, only: [:show, :update, :destroy]
+  # before_action :restrict_access, only: [:show, :update, :destroy]
 
   # GET /sequences
   def index
@@ -9,7 +10,13 @@ class SequencesController < ApplicationController
 
   # GET /sequences/1
   def show
-    render json: @sequence
+    respond_to do |format|
+      format.pdf do
+        pdf = Prawn::Document.new
+        send_data pdf.render, filename: 'report.pdf', type: 'application/pdf'
+      end
+      format.json { render json: @sequence }
+    end
   end
 
   # POST /sequences
@@ -42,6 +49,12 @@ class SequencesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_sequence
       @sequence = Sequence.find(params[:id])
+    end
+
+    def restrict_access
+      if @sequence.user_id != current_user.id
+        render json: { error: 'Forbidden' }, status: 403
+      end
     end
 
     # Only allow a trusted parameter "white list" through.
