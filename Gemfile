@@ -28,6 +28,7 @@ gem 'rack-cors'
 gem "aws-sdk-s3", require: false
 gem 'prawn'
 gem 'prawn-fast-png'
+gem 'rmagick'
 gem 'responders'
 
 group :development, :test do
