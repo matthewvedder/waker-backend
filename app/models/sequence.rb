@@ -8,8 +8,14 @@ class Sequence < ApplicationRecord
   has_many :asanas, :through => :asana_instances
   belongs_to :user
 
+  def instances_by_layout
+    layout = self.layout.map(&:to_i)
+    self.asana_instances
+      .sort_by{ |instance| layout.index(instance.id) || layout.length }
+  end
+
   def generate_pdf
-    asana_instances = self.asana_instances
+    asana_instances = self.instances_by_layout
     sequence_name = self.name
     created_at = self.created_at
     img_size = 115
