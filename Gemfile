@@ -27,6 +27,7 @@ gem 'knock'
 gem 'rack-cors'
 gem "aws-sdk-s3", require: false
 gem 'prawn'
+gem 'prawn-fast-png'
 gem 'responders'
 
 group :development, :test do

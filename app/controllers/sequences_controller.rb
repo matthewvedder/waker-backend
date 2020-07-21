@@ -12,10 +12,9 @@ class SequencesController < ApplicationController
   def show
     respond_to do |format|
       format.pdf do
-        pdf = Prawn::Document.new
-        send_data pdf.render, filename: 'report.pdf', type: 'application/pdf'
+        send_data @sequence.generate_pdf, filename: 'report.pdf', type: 'application/pdf'
       end
-      format.json { render json: @sequence }
+      # format.json { render json: @sequence }
     end
   end
 
