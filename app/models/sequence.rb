@@ -39,9 +39,14 @@ class Sequence < ApplicationRecord
     asana_instances.each_with_index do |asana_instance, index|
       url = rails_blob_url(asana_instance.asana.thumbnail, host: 'localhost:8000')
       png_file = open(url)
-      image = Magick::Image.read(png_file.path)[0]
+
+      # set trasnparent background to white and convert to jpg for performance
+      img_list = Magick::ImageList.new
+      img_list.read(png_file.path)
+      # create new "layer" with white background and size of original image
+      image = img_list.reverse.flatten_images
+      img_list.new_image(img_list.first.columns, img_list.first.rows) { self.background_color = "white" }
       image.format = "JPG"
-      # system "convert -flatten #{image.filename} #{image.filename}"
 
       page_index = index / poses_per_page
       page_top = page_index > 0 ? subsequent_page_top : page_one_top
@@ -49,6 +54,9 @@ class Sequence < ApplicationRecord
       x = (index % poses_per_line) * (img_size + img_padding_right)
       y = page_top - ((img_size + img_padding_bottom) * ((index - (page_index * poses_per_page)) / poses_per_line))
       pdf.image StringIO.new(image.to_blob), at: [x, y],fit: [img_size, img_size]
+      image.destroy!
+      # tell ruby garbage collector to run as work around to cache management bug with RMagic
+      GC.start
       pdf.text_box(
         asana_instance.notes,
         at: [x, y - (img_size - img_margin_bottom)],
