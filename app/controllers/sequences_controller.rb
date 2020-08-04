@@ -1,7 +1,7 @@
 class SequencesController < ApplicationController
-  # before_action :authenticate_user
-  before_action :set_sequence, only: [:show, :update, :destroy]
-  # before_action :restrict_access, only: [:show, :update, :destroy]
+  before_action :authenticate_user
+  before_action :set_sequence, only: [:show, :update, :destroy, :pdf]
+  before_action :restrict_access, only: [:show, :update, :destroy, :pdf]
 
   # GET /sequences
   def index
@@ -10,12 +10,12 @@ class SequencesController < ApplicationController
 
   # GET /sequences/1
   def show
-    respond_to do |format|
-      format.pdf do
-        send_data @sequence.generate_pdf, filename: 'report.pdf', type: 'application/pdf'
-      end
-      format.json { render json: @sequence }
-    end
+    render json: @sequence
+  end
+
+  # GET /sequences/:id/pdf
+  def pdf
+    send_data @sequence.generate_pdf, filename: 'report.pdf', type: 'application/pdf'
   end
 
   # POST /sequences
