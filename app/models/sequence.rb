@@ -18,15 +18,17 @@ class Sequence < ApplicationRecord
     asana_instances = self.instances_by_layout
     sequence_name = self.name
     created_at = self.created_at
-    img_size = 115
-    img_padding_right = 25
+    img_size = 100
+    img_padding_right = 45
     img_padding_bottom = 55
-    img_margin_bottom = 10
+    img_margin_bottom = 0
     page_one_top = 670
     subsequent_page_top = 700
     poses_per_line = 4
     lines_per_page = 4
     poses_per_page = poses_per_line * lines_per_page
+    name_size = 10
+    name_overflow_threshold = 24
 
     pdf = Prawn::Document.new
     pdf.text sequence_name, align: :center, color: "333333", size: 24
@@ -37,6 +39,8 @@ class Sequence < ApplicationRecord
       size: 12
     )
     asana_instances.each_with_index do |asana_instance, index|
+      notes_margin_top = asana_instance.asana.name.length >= name_overflow_threshold ?
+        (name_size * 2.5) : (name_size * 1.5)
       url = rails_blob_url(asana_instance.asana.thumbnail, host: 'localhost:8000')
       png_file = open(url)
 
@@ -57,11 +61,23 @@ class Sequence < ApplicationRecord
       image.destroy!
       # tell ruby garbage collector to run as work around to cache management bug with RMagic
       GC.start
+      pdf.formatted_text_box(
+        [{
+          text: asana_instance.asana.name,
+          size: name_size,
+          color: "555555",
+        }],
+        at: [x, y - (img_size + img_margin_bottom)],
+        width: img_size + img_padding_right - 15,
+        height: name_size,
+        overflow: :expand,
+        # style: :bold
+      )
       pdf.text_box(
         asana_instance.notes,
-        at: [x, y - (img_size - img_margin_bottom)],
-        width: img_size,
-        height: img_padding_bottom - img_margin_bottom,
+        at: [x, y - (img_size + img_margin_bottom + notes_margin_top)],
+        width: img_size + 15,
+        height: img_padding_bottom - img_margin_bottom - notes_margin_top,
         size: 9
       )
     end

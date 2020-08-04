@@ -14,7 +14,7 @@ class SequencesController < ApplicationController
       format.pdf do
         send_data @sequence.generate_pdf, filename: 'report.pdf', type: 'application/pdf'
       end
-      # format.json { render json: @sequence }
+      format.json { render json: @sequence }
     end
   end
 
