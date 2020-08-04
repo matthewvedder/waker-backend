@@ -73,13 +73,15 @@ class Sequence < ApplicationRecord
         overflow: :expand,
         # style: :bold
       )
-      pdf.text_box(
-        asana_instance.notes,
-        at: [x, y - (img_size + img_margin_bottom + notes_margin_top)],
-        width: img_size + 15,
-        height: img_padding_bottom - img_margin_bottom - notes_margin_top,
-        size: 9
-      )
+      if asana_instance.notes
+        pdf.text_box(
+          asana_instance.notes,
+          at: [x, y - (img_size + img_margin_bottom + notes_margin_top)],
+          width: img_size + 15,
+          height: img_padding_bottom - img_margin_bottom - notes_margin_top,
+          size: 9
+        )
+      end
     end
     pdf.render
   end
