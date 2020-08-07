@@ -1,7 +1,7 @@
 class SequencesController < ApplicationController
   before_action :authenticate_user
   before_action :set_sequence, only: [:show, :update, :destroy, :pdf]
-  before_action :restrict_access, only: [:show, :update, :destroy, :pdf]
+  before_action :restrict_access, only: [:update, :destroy, :pdf]
 
   # GET /sequences
   def index
@@ -10,7 +10,8 @@ class SequencesController < ApplicationController
 
   # GET /sequences/1
   def show
-    render json: @sequence
+    can_edit = @sequence.user_id == current_user.id
+    render json: @sequence.attributes.merge({ can_edit: can_edit })
   end
 
   # GET /sequences/:id/pdf
