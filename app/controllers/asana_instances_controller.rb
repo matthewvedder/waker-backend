@@ -1,6 +1,7 @@
 class AsanaInstancesController < ApplicationController
   before_action :authenticate_user
   before_action :set_asana_instance, only: [:show, :update, :destroy]
+  before_action :restrict_access, only: [:update, :destroy, :pdf]
 
   # GET /asana_instances
   def index
@@ -43,6 +44,12 @@ class AsanaInstancesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_asana_instance
       @asana_instance = AsanaInstance.find(params[:id])
+    end
+
+    def restrict_access
+      if @asana_instance.sequence.user_id != current_user.id
+        render json: { error: 'Forbidden' }, status: 403
+      end
     end
 
     def sequence_by_layout(sequence)
