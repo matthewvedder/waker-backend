@@ -1,7 +1,7 @@
 class SequencesController < ApplicationController
   before_action :authenticate_user
   before_action :set_sequence, only: [:show, :update, :destroy, :pdf]
-  before_action :restrict_access, only: [:update, :destroy, :pdf]
+  before_action :restrict_access, only: [:update, :destroy]
 
   # GET /sequences
   def index
