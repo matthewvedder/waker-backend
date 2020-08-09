@@ -19,3 +19,31 @@ end
 #   asana_instance.notes = lorum[0...rand(1000)]
 #   asana_instance.save!
 # end
+
+tags = [
+  'backbend',
+  'forward fold',
+  'twist',
+  'standing',
+  'seated',
+  'arm balance',
+  'inversion',
+  'lateral',
+  'neutral',
+  'lunge',
+  'floor'
+
+  # 'shoulders',
+  # 'hips',
+  # 'groin',
+  # 'internal rotation',
+  # 'external rotation'
+
+  # 'upregulating',
+  # 'downregulating',
+
+  # 'primary series',
+  # 'light on yoga',
+  # 'fundamental',
+  # 'advanced',
+]
