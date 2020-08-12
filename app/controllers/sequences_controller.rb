@@ -7,7 +7,8 @@ class SequencesController < ApplicationController
   def index
     puts params
     if params[:feed] == "true"
-      render json: Sequence.order(created_at: :desc).limit(1000)
+      render json: Sequence.order(created_at: :desc).limit(1000),
+        :include => {:user => {:only => :username}}
     else
       render json: current_user.sequences.order(created_at: :desc)
     end

@@ -1,12 +1,11 @@
 require 'open-uri'
-# require 'prawn'
-# require 'prawn/fast_png'
 include Rails.application.routes.url_helpers
 
 class Sequence < ApplicationRecord
   has_many :asana_instances
   has_many :asanas, :through => :asana_instances
   belongs_to :user
+  delegate :username, :username, :to => :user
 
   def instances_by_layout
     layout = self.layout.map(&:to_i)
