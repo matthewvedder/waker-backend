@@ -5,7 +5,12 @@ class SequencesController < ApplicationController
 
   # GET /sequences
   def index
-    render json: current_user.sequences.order(created_at: :desc)
+    puts params
+    if params[:feed] == "true"
+      render json: Sequence.order(created_at: :desc).limit(1000)
+    else
+      render json: current_user.sequences.order(created_at: :desc)
+    end
   end
 
   # GET /sequences/1
