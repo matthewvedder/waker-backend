@@ -12,8 +12,8 @@ class SequencesController < ApplicationController
         :include => {user: {only: :username}, likes: {}}
       )
       sequences.each_with_index do |sequence, index|
-        sequences_json[index]['liked_by_current_user'] = sequence
-          .liked_by_user(current_user.id)
+        sequences_json[index]['like_by_current_user'] = sequence
+          .like_by_user(current_user.id)
       end
 
       render json: sequences_json

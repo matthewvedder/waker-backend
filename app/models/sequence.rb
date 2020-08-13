@@ -15,8 +15,8 @@ class Sequence < ApplicationRecord
       .sort_by{ |instance| layout.index(instance.id) || layout.length }
   end
 
-  def liked_by_user(user_id)
-    self.likes.pluck(:user_id).include?(user_id)
+  def like_by_user(user_id)
+    self.likes.find_by_user_id(user_id)
   end
 
   def generate_pdf
