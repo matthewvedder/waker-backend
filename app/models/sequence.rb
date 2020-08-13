@@ -15,6 +15,10 @@ class Sequence < ApplicationRecord
       .sort_by{ |instance| layout.index(instance.id) || layout.length }
   end
 
+  def liked_by_user(user_id)
+    self.likes.pluck(:user_id).include?(user_id)
+  end
+
   def generate_pdf
     asana_instances = self.instances_by_layout
     sequence_name = self.name

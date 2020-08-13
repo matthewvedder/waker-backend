@@ -44,6 +44,9 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (6.5.0)
       activerecord (>= 5.0, < 6.1)
+    acts_as_paranoid (0.6.3)
+      activerecord (>= 4.2, < 7.0)
+      activesupport (>= 4.2, < 7.0)
     arel (9.0.0)
     aws-eventstream (1.0.1)
     aws-partitions (1.138.0)
@@ -168,6 +171,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on (~> 6.0)
+  acts_as_paranoid (~> 0.6.3)
   aws-sdk-s3
   bcrypt (~> 3.1.7)
   byebug

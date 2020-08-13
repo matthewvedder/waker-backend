@@ -1,14 +1,22 @@
 class SequencesController < ApplicationController
   before_action :authenticate_user
   before_action :set_sequence, only: [:show, :update, :destroy, :pdf]
-  before_action :restrict_access, only: [:update, :destroy, :create]
+  before_action :restrict_access, only: [:update, :destroy]
 
   # GET /sequences
   def index
     puts params
     if params[:feed] == "true"
-      render json: Sequence.order(created_at: :desc).limit(1000),
-        :include => {:user => {:only => :username}}
+      sequences = Sequence.order(created_at: :desc).limit(1000)
+      sequences_json = sequences.as_json(
+        :include => {user: {only: :username}, likes: {}}
+      )
+      sequences.each_with_index do |sequence, index|
+        sequences_json[index]['liked_by_current_user'] = sequence
+          .liked_by_user(current_user.id)
+      end
+
+      render json: sequences_json
     else
       render json: current_user.sequences.order(created_at: :desc)
     end
