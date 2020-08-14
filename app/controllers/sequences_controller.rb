@@ -5,7 +5,6 @@ class SequencesController < ApplicationController
 
   # GET /sequences
   def index
-    puts params
     if params[:feed] == "true"
       sequences = Sequence.order(created_at: :desc).limit(1000)
       sequences_json = sequences.as_json(
@@ -18,7 +17,7 @@ class SequencesController < ApplicationController
 
       render json: sequences_json
     else
-      render json: current_user.sequences.order(created_at: :desc)
+      render json: current_user.sequences.order(created_at: :desc), :include => {likes: {}}
     end
   end
 
@@ -56,7 +55,7 @@ class SequencesController < ApplicationController
   # DELETE /sequences/1
   def destroy
     @sequence.destroy
-    render json: current_user.sequences
+    render json: current_user.sequences.order(created_at: :desc), :include => {likes: {}}
   end
 
   private
