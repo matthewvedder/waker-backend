@@ -2,7 +2,7 @@ require 'open-uri'
 include Rails.application.routes.url_helpers
 
 class Sequence < ApplicationRecord
-  has_many :asana_instances
+  has_many :asana_instances, :dependent => :destroy
   has_many :asanas, :through => :asana_instances
   has_many :likes
   has_many :liking_users, :through => :likes, :source => :user
