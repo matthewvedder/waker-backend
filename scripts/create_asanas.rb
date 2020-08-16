@@ -29,6 +29,11 @@ sequence.asana_instances.each do |asana_instance|
   asana_instance.save!
 end
 
+list=$(ls *.png)
+for img in $list; do
+convert $img -trim -resize 200x200 $img
+done
+
 tags = [
   'backbend',
   'forward fold',
