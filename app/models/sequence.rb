@@ -47,11 +47,11 @@ class Sequence < ApplicationRecord
       notes_margin_top = asana_instance.asana.name.length >= name_overflow_threshold ?
         (name_size * 2.5) : (name_size * 1.5)
       url = rails_blob_url(asana_instance.asana.thumbnail, host: 'localhost:8000')
-      png_file = open(url)
+      png_file = open(url, &:read)
 
       # set trasnparent background to white and convert to jpg for performance
       img_list = Magick::ImageList.new
-      img_list.read(png_file.path)
+      img_list.from_blob(png_file)
       # create new "layer" with white background and size of original image
       image = img_list.reverse.flatten_images
       img_list.new_image(img_list.first.columns, img_list.first.rows) { self.background_color = "white" }

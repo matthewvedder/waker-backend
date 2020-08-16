@@ -32,7 +32,6 @@ gem 'rmagick'
 gem 'responders'
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'acts_as_paranoid', '~> 0.6.3'
-gem 'image_processing'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
