@@ -56,7 +56,11 @@ class AsanaInstancesController < ApplicationController
       layout = sequence.layout.map(&:to_i)
       sequence.asana_instances
         .sort_by{ |instance| layout.index(instance.id) || layout.length }
-        .to_json(include: :asana)
+        .map do |a|
+          json = a.as_json(include: :asana)
+          json['asana'][:thumbnail] = url_for(a.asana.thumbnail) if a.asana.thumbnail.attached?
+          json
+        end
     end
 
     # Only allow a trusted parameter "white list" through.

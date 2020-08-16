@@ -1,4 +1,4 @@
-path = "/home/vedder/Poses/PNG/"
+path = "/home/vedder/Poses/thumbnails/"
 filenames = Dir.entries(path).select {|f| !File.directory? f}
 
 filenames.each do |filename|
@@ -29,9 +29,10 @@ sequence.asana_instances.each do |asana_instance|
   asana_instance.save!
 end
 
+# bash script for resizing
 list=$(ls *.png)
 for img in $list; do
-convert $img -trim -resize 200x200 $img
+convert $img -resize 200x200 $img
 done
 
 tags = [
