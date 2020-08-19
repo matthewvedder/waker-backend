@@ -6,7 +6,7 @@ class SequencesController < ApplicationController
   # GET /sequences
   def index
     if params[:feed] == "true"
-      sequences = Sequence.order(created_at: :desc).limit(1000)
+      sequences = Sequence.where(public: true).order(created_at: :desc).limit(1000)
       sequences_json = sequences.as_json(
         :include => {user: {only: :username}, likes: {}}
       )
@@ -72,6 +72,6 @@ class SequencesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def sequence_params
-      params.require(:sequence).permit(:name, :level, layout: [])
+      params.require(:sequence).permit(:name, :level, :public, layout: [])
     end
 end
