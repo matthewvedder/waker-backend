@@ -1,4 +1,4 @@
 class ApplicationController < ActionController::API
-  include Knock::Authenticable
   include ActionController::MimeResponds
+  include DeviseTokenAuth::Concerns::SetUserByToken
 end

@@ -18,7 +18,6 @@ gem 'puma', '~> 3.7'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
-gem 'knock'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -32,6 +31,8 @@ gem 'rmagick'
 gem 'responders'
 gem 'acts-as-taggable-on', '~> 6.0'
 gem 'acts_as_paranoid', '~> 0.6.3'
+gem 'devise'
+gem 'devise_token_auth'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

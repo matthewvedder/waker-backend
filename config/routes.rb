@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  post 'user_token' => 'user_token#create'
+  mount_devise_token_auth_for 'User', at: 'auth'
+  # post 'user_token' => 'user_token#create'
   resources :users
   resources :asana_instances
   resources :likes

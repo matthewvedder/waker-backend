@@ -1,6 +1,6 @@
 class LikesController < ApplicationController
   before_action :set_like, only: [:destroy]
-  before_action :authenticate_user
+  before_action :authenticate_user!
   before_action :restrict_access, only: [:destroy]
 
   # POST /likes

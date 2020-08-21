@@ -1,5 +1,8 @@
 class User < ApplicationRecord
-  has_secure_password
+  extend Devise::Models
+  include DeviseTokenAuth::Concerns::ActiveRecordSupport
+  include DeviseTokenAuth::Concerns::User
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   has_many :sequences
   has_many :likes
