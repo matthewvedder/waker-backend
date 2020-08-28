@@ -6,6 +6,7 @@ class Sequence < ApplicationRecord
   has_many :asanas, :through => :asana_instances
   has_many :likes
   has_many :liking_users, :through => :likes, :source => :user
+  has_many :comments
   belongs_to :user
   delegate :username, :username, :to => :user
 
