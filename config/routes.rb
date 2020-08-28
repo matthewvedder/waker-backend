@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users
   resources :asana_instances
   resources :likes
+  resources :comments
   # asanas
   resources :asanas
   get 'asana-tags', to: 'asanas#tags'
