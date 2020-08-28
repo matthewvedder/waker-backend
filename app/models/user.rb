@@ -14,4 +14,8 @@ class User < ApplicationRecord
   def format_email
     self.email = self.email.downcase
   end
+
+  def send_confirmation_notification?
+    false
+  end
 end
