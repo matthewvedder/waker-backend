@@ -3,7 +3,8 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::ActiveRecordSupport
   include DeviseTokenAuth::Concerns::User
   devise :database_authenticatable, :registerable, :recoverable, :rememberable
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :username, :presence => true
+  validates :username, :uniqueness => true
   has_many :sequences
   has_many :likes
   has_many :liked_sequences, :through => :likes, :source => :sequence
