@@ -63,6 +63,6 @@ class AsanasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def asana_params
-      params.require(:asana).permit(:name, :level, :description)
+      params.require(:asana).permit(:name, :level, :description, :file_name)
     end
 end
