@@ -34,12 +34,12 @@ class AsanasController < ApplicationController
   # PATCH/PUT /asanas/1
   def update
     if @asana.update(asana_params)
-      img = params['image'].split(',')[1]
-      imageBinaryData = Base64.decode64(img)
-      @asana.thumbnail.attach(io: StringIO.new(imageBinaryData), filename:'test.png')
-      json = @asana.as_json
-      json[:image] = img if @asana.thumbnail.attached?
-      render json: json
+      # img = params['image'].split(',')[1]
+      # imageBinaryData = Base64.decode64(img)
+      # @asana.thumbnail.attach(io: StringIO.new(imageBinaryData), filename:'test.png')
+      # json = @asana.as_json
+      # json[:image] = img if @asana.thumbnail.attached?
+      render json: @asana
     else
       render json: @asana.errors, status: :unprocessable_entity
     end
@@ -63,6 +63,6 @@ class AsanasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def asana_params
-      params.require(:asana).permit(:name, :level, :description, :file_name)
+      params.require(:asana).permit(:name, :level, :description, :file_name, :tag_list => [])
     end
 end
