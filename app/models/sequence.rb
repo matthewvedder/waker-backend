@@ -45,14 +45,20 @@ class Sequence < ApplicationRecord
       size: 12
     )
     asana_instances.each_with_index do |asana_instance, index|
-      notes_margin_top = asana_instance.asana.name.length >= name_overflow_threshold ?
+      asana = asana_instance.asana
+      notes_margin_top = asana.name.length >= name_overflow_threshold ?
         (name_size * 2.5) : (name_size * 1.5)
-      url = rails_blob_url(asana_instance.asana.thumbnail, host: 'localhost:8000')
-      png_file = open(url, &:read)
+      # url = rails_blob_url(asana.thumbnail, host: 'localhost:8000')
+      # png_file = open(url, &:read)
 
       # set trasnparent background to white and convert to jpg for performance
       img_list = Magick::ImageList.new
-      img_list.from_blob(png_file)
+      # img_list.from_blob(png_file)
+      if asana.file_name
+        img_list.read("public/asanas/thumbnails/#{asana.file_name}")
+      else
+        img_list.read("public/no-image-available-thumbnail.png")
+      end
       # create new "layer" with white background and size of original image
       image = img_list.reverse.flatten_images
       img_list.new_image(img_list.first.columns, img_list.first.rows) { self.background_color = "white" }
@@ -77,7 +83,6 @@ class Sequence < ApplicationRecord
         width: img_size + img_padding_right - 15,
         height: name_size,
         overflow: :expand,
-        # style: :bold
       )
       if asana_instance.notes
         pdf.text_box(
