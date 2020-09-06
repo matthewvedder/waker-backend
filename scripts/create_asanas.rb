@@ -1,18 +1,11 @@
-path = "/home/vedder/Poses/thumbnails/"
+path = "../public/asanas/PNG/"
 filenames = Dir.entries(path).select {|f| !File.directory? f}
 
 filenames.each do |filename|
   name = filename.split('.')[0].split('-').join(' ').titlecase
-  asana = Asana.find_by_name(name)
   if (name.present?)
-    if asana
-      asana = Asana.new(name: name)
-      asana.thumbnail.purge
-    else
-      asana = Asana.new(name: name)
-    end
+    asana = Asana.new(name: name, file_name: filename)
     asana.save
-    asana.thumbnail.attach(io: File.open(path + filename), filename: 'filename')
   end
 end
 
