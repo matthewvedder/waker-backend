@@ -95,5 +95,5 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-  Rails.application.routes.default_url_options[:host] = 'waker.studio'
+  Rails.application.routes.default_url_options[:host] = 'https://desolate-taiga-13085.herokuapp.com/'
 end
