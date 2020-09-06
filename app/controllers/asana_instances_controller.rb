@@ -19,6 +19,8 @@ class AsanaInstancesController < ApplicationController
     asana_instance = AsanaInstance.new(asana_instance_params)
     sequence = Sequence.find params[:sequence_id]
     if asana_instance.save
+      sequence.layout.push(asana_instance.id)
+      sequence.save
       render json: sequence_by_layout(sequence), status: :created, location: asana_instance
     else
       render json: asana_instance.errors, status: :unprocessable_entity
