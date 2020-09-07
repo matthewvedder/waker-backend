@@ -25,7 +25,7 @@ end
 # bash script for resizing
 list=$(ls *.png)
 for img in $list; do
-convert $img -resize 200x200 $img
+convert $img -thumbnail 200x200 $img
 done
 
 tags = [
