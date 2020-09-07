@@ -52,7 +52,7 @@ class AsanasController < ApplicationController
 
   # GET /asana-tags
   def tags
-    render json: ActsAsTaggableOn::Tagwhere.not(taggings_count: 0)
+    render json: ActsAsTaggableOn::Tag.where.not(taggings_count: 0)
   end
 
   private
