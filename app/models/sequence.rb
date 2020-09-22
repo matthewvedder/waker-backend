@@ -96,4 +96,23 @@ class Sequence < ApplicationRecord
     end
     pdf.render
   end
+
+  def duplicate
+    sequence_copy = self.dup
+    sequence_copy.name = "Copy of #{self.name}"
+    # save early to get id
+    sequence_copy.save
+    new_layout = []
+    self.layout.each do |instance_id|
+      instance = AsanaInstance.find(instance_id)
+      instance_copy = instance.dup
+      instance_copy.sequence_id = sequence_copy.id
+      instance_copy.save
+      new_layout.push(instance_copy.id)
+    end
+
+    sequence_copy.layout = new_layout
+    sequence_copy.save
+    sequence_copy
+  end
 end
