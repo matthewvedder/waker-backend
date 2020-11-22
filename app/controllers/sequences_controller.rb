@@ -1,6 +1,6 @@
 class SequencesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_sequence, only: [:show, :update, :destroy, :pdf]
+  before_action :set_sequence, only: [:show, :update, :destroy, :pdf, :duplicate]
   before_action :restrict_access, only: [:update, :destroy]
 
   # GET /sequences
@@ -30,6 +30,12 @@ class SequencesController < ApplicationController
   # GET /sequences/:id/pdf
   def pdf
     send_data @sequence.generate_pdf, filename: 'report.pdf', type: 'application/pdf'
+  end
+
+  #POST /sequences/:id/duplicate
+  def duplicate
+    new_sequence = @sequence.duplicate
+    render json: new_sequence
   end
 
   # POST /sequences

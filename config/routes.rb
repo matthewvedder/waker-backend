@@ -12,4 +12,5 @@ Rails.application.routes.draw do
   # sequences
   resources :sequences
   get 'sequences/:id/pdf', to: 'sequences#pdf'
+  post 'sequences/:id/duplicate', to: 'sequences#duplicate'
 end
