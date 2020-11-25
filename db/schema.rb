@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_29_214415) do
+ActiveRecord::Schema.define(version: 2020_11_25_175923) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(version: 2020_08_29_214415) do
     t.bigint "user_id"
     t.jsonb "layout", default: [], null: false
     t.boolean "public", default: false
+    t.boolean "verified", default: false
     t.index ["public"], name: "index_sequences_on_public"
     t.index ["user_id"], name: "index_sequences_on_user_id"
   end
