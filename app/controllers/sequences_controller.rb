@@ -5,8 +5,9 @@ class SequencesController < ApplicationController
 
   # GET /sequences
   def index
+    order_by = params[:order_by] || 'created_at'
     if params[:feed] == "true"
-      sequences = Sequence.where(public: true).order(created_at: :desc).limit(1000)
+      sequences = Sequence.where(public: true).order(order_by => :desc).limit(1000)
       sequences_json = sequences.as_json(
         :include => {user: {only: :username}, likes: {}}
       )
@@ -17,7 +18,7 @@ class SequencesController < ApplicationController
 
       render json: sequences_json
     else
-      render json: current_user.sequences.order(created_at: :desc), :include => {likes: {}}
+      render json: current_user.sequences.order(order_by => :desc), :include => {likes: {}}
     end
   end
 
